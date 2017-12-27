@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snow.mapper.MessageBoardMapper">
+    <resultMap id="messageBoard" type="com.snow.entity.MessageBoard">
+        <id property="messageBoardId" column="message_id"/>
+        <result property="context" column="message_context"/>
+        <result property="createDate" column="create_time"/>
+        <result property="userId" column="user_id"/>
+        <result property="state" column="state"/>
+        <collection property="replies" columnPrefix="reply_" resultMap="com.snow.mapper.ReplyMapper.reply"/>
+    </resultMap>
+    <select id="messageNumber">
+        SELECT count(message_id) FROM message WHERE state = #{state}
+    </select>
+    <select id="selectMessageBoard" resultMap="messageBoard">
+        SELECT a.message_id,a.create_time,a.message_context,a.user_id,a.state,
+                b.reply_context reply_reply_context, b.create_time reply_create_time,b.user_id reply_user_id
+        FROM message a
+        LEFT JOIN reply b ON a.message_id = b.message_id
+        WHERE a.state = #{state}
+        ORDER BY a.create_time LIMIT #{limit},#{number}
+    </select>
+    <insert id="insertMessageBoard">
+        INSERT IGNORE INTO message VALUES (0,#{createDate},#{context},#{userId},0)
+    </insert>
+    <delete id="deleteMessageBoard">
+        DELETE FROM message WHERE message_id = #{id}
+    </delete>
+    <update id="updateMessageBoard">
+        UPDATE message SET state = #{state} WHERE message_id = #{id}
+    </update>
+</mapper>

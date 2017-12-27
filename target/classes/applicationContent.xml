@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:component-scan base-package="com.snow.service"/>
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+          p:location="classpath:jdbc.properties"
+          p:fileEncoding="utf-8"/>
+    <bean id="dataSource"
+          class="org.apache.ibatis.datasource.pooled.PooledDataSource"
+          p:driver="${driver}"
+          p:url="${url}"
+          p:username="${username}"
+          p:password="${password}"/>
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:configuration.xml"/>
+        <property name="mapperLocations">
+            <array>
+                <value>classpath:com/snow/mapper/*.xml</value>
+            </array>
+        </property>
+        <property name="typeAliasesPackage" value="com.snow.entity"/>
+    </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.snow.mapper"/>
+    </bean>
+</beans>

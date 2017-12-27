@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snow.mapper.ReplyMapper">
+    <resultMap id="reply" type="com.snow.entity.Reply">
+        <result property="context" column="reply_context"/>
+        <result property="createDate" column="create_time"/>
+        <result property="userId" column="user_id"/>
+        <result property="messageId" column="message_id"/>
+    </resultMap>
+    <insert id="insertReply">
+        INSERT IGNORE INTO reply (create_time, reply_context, user_id, message_id) VALUES (#{createDate},#{context},#{userId},#{messageId})
+    </insert>
+    <delete id="deleteReply">
+        DELETE FROM reply WHERE user_id = #{userId} AND message_id = #{messageId}
+    </delete>
+</mapper>

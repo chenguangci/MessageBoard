@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snow.mapper.UserMapper">
+    <resultMap id="user" type="com.snow.entity.User">
+        <id property="userId" column="userId"/>
+        <result property="userName" column="user_name"/>
+        <result property="password" column="user_password"/>
+    </resultMap>
+    <select id="userNumber" resultType="java.lang.Integer">
+        SELECT count(user_id) FROM the_user
+        <where>
+            <if test="userId!=null and !&quot;&quot;.equals(userId.trim())">
+                and userId = #{userId}
+            </if>
+            <if test="userName!=null and !&quot;&quot;.equals(userName.trim())">
+                and user_name = #{userName}
+            </if>
+            <if test="password!=null and !&quot;&quot;.equals(password.trim())">
+                and user_password = #{password}
+            </if>
+        </where>
+    </select>
+    <select id="selectUser" resultMap="user">
+        SELECT user_id,user_name,user_password FROM the_user
+        <where>
+            <if test="user.userId!=null and !&quot;&quot;.equals(user.userId.trim())">
+                and userId = #{user.userId}
+            </if>
+            <if test="user.userName!=null and !&quot;&quot;.equals(user.userName.trim())">
+                and user_name = #{user.userName}
+            </if>
+            <if test="user.password!=null and !&quot;&quot;.equals(user.password.trim())">
+                and user_password = #{user.password}
+            </if>
+        </where>
+        ORDER BY userId LIMIT #{limit},#{number}
+    </select>
+    <insert id="insertUser">
+        INSERT IGNORE INTO the_user VALUE (#{userId},#{userName},#{password})
+    </insert>
+    <update id="updateUser">
+        UPDATE the_user SET user_id = #{user.userId},user_name = #{user.userName},user_password = #{user.password}
+        WHERE user_id = #{oldId}
+    </update>
+    <delete id="deleteUser">
+        DELETE FROM the_user WHERE user_id = #{id}
+    </delete>
+</mapper>
