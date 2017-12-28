@@ -15,7 +15,6 @@ public class MessageBoardServiceTest extends TestCase {
     private MessageBoardService service;
     @Test
     public void testMessageNumber() throws Exception {
-
     }
     @Test
     public void testSelectMessageBoard() throws Exception {
@@ -31,7 +30,7 @@ public class MessageBoardServiceTest extends TestCase {
     }
     @Test
     public void testInsertMessageBoard() throws Exception {
-        System.out.println(service.insertMessageBoard("来自陈会长的吐槽","0001"));
+        System.out.println(service.insertMessageBoard("来自陈会长的吐槽","light"));
     }
 
 }

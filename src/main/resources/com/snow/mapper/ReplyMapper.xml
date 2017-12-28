@@ -5,13 +5,13 @@
     <resultMap id="reply" type="com.snow.entity.Reply">
         <result property="context" column="reply_context"/>
         <result property="createDate" column="create_time"/>
-        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
         <result property="messageId" column="message_id"/>
     </resultMap>
     <insert id="insertReply">
-        INSERT IGNORE INTO reply (create_time, reply_context, user_id, message_id) VALUES (#{createDate},#{context},#{userId},#{messageId})
+        INSERT IGNORE INTO reply (create_time, reply_context, user_name, message_id) VALUES (#{createDate},#{context},#{userName},#{messageId})
     </insert>
     <delete id="deleteReply">
-        DELETE FROM reply WHERE user_id = #{userId} AND message_id = #{messageId}
+        DELETE FROM reply WHERE user_name = #{userName} AND message_id = #{messageId} AND create_time = #{createTime}
     </delete>
 </mapper>

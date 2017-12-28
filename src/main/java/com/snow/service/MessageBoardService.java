@@ -3,15 +3,14 @@ package com.snow.service;
 import com.snow.entity.MessageBoard;
 import com.snow.mapper.MessageBoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.stereotype.Service;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 @Service
 public class MessageBoardService {
+
     private final MessageBoardMapper messageBoardMapper;
 
     @Autowired
@@ -61,9 +60,9 @@ public class MessageBoardService {
         return messageBoardMapper.updateMessageBoard(state, id);
     }
 
-    public int insertMessageBoard(String context, String userId) {
+    public int insertMessageBoard(String context, String userName) {
         MessageBoard messageBoard = new MessageBoard();
-        messageBoard.setUserId(userId);
+        messageBoard.setUserName(userName);
         messageBoard.setContext(context);
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

@@ -7,18 +7,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
 import java.util.List;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    private final UserService service;
+
+    private final UserService service ;
 
     @Autowired
     public UserController(UserService service) {
         this.service = service;
     }
 
+    @RequestMapping(value = "/toRegister")
+    public String toRegister(){
+        return "register";
+    }
     /**
      * 注册
      * @param user 注册信息
@@ -40,16 +46,16 @@ public class UserController {
 
     /**
      * 登陆判断
-     * @param userId 用户名
+     * @param userName 用户名
      * @param password 密码
      * @return 结果
      */
     @RequestMapping(value = "/login")
-    public ModelAndView login(@RequestParam(value = "userId", required = false)String userId,
+    public ModelAndView login(@RequestParam(value = "userName", required = false)String userName,
                               @RequestParam(value = "password", required = false)String password) {
         ModelAndView model = new ModelAndView();
         User user = new User();
-        user.setUserId(userId);
+        user.setUserName(userName);
         user.setPassword(password);
         List<User> users = service.selectUser(user,0,1);
         if (users.size()>0) {

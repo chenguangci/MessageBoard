@@ -4,7 +4,7 @@ public class Reply {
     private String context;
     private String createDate;
     private Integer messageId;
-    private String userId;
+    private String userName;
 
     @Override
     public String toString() {
@@ -12,16 +12,16 @@ public class Reply {
                 "context='" + context + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", messageId=" + messageId +
-                ", userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
                 '}';
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getContext() {

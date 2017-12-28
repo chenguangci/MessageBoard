@@ -23,13 +23,12 @@ public class UserMapperTest extends TestCase {
     @Test
     public void testSelectUser() throws Exception {
         User user = new User();
-        user.setUserId("0001");
-        System.out.println(userMapper.selectUser(user,0,1).get(0).getUserId());
+
+        System.out.println(userMapper.selectUser(user,0,1).get(0).getUserName());
     }
     @Test
     public void testInsertUser() throws Exception {
         User user = new User();
-        user.setUserId("0002");
         user.setUserName("light");
         user.setPassword("0002");
         System.out.println(userMapper.insertUser(user));
@@ -41,7 +40,6 @@ public class UserMapperTest extends TestCase {
     @Test
     public void testUpdateUser() throws Exception {
         User user = new User();
-        user.setUserId("0001");
         user.setUserName("snow");
         user.setPassword("0001");
         System.out.println(userMapper.updateUser("0001",user));

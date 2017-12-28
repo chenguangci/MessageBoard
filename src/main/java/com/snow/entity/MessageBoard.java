@@ -6,7 +6,7 @@ public class MessageBoard {
     private Integer messageBoardId;
     private String context;
     private String createDate;
-    private String userId;
+    private String userName;
     private Integer state;
     private List<Reply> replies;
     @Override
@@ -22,7 +22,7 @@ public class MessageBoard {
         return "MessageBoard{" +
                 ", context='" + context + '\'' +
                 ", createDate=" + createDate +
-                ", userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
                 ", state=" + state +","+reply+
                 '}';
     }
@@ -51,12 +51,12 @@ public class MessageBoard {
         this.createDate = createDate;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public Integer getState() {

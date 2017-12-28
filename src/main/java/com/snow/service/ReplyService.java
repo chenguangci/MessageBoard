@@ -8,11 +8,13 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Service
+@Service(value = "reply")
 public class ReplyService {
-    private final ReplyMapper replyMapper;
+
+    private final ReplyMapper replyMapper ;
 
     @Autowired
+
     public ReplyService(ReplyMapper replyMapper) {
         this.replyMapper = replyMapper;
     }
@@ -23,7 +25,7 @@ public class ReplyService {
      * @param context 评论内容
      * @return 结果 0/1
      */
-    public int insertReply(Integer id, String userId, String context) {
+    public int insertReply(Integer id, String userName, String context) {
         Reply reply = new Reply();
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -31,17 +33,17 @@ public class ReplyService {
         reply.setCreateDate(time);
         reply.setContext(context);
         reply.setMessageId(id);
-        reply.setUserId(userId);
+        reply.setUserName(userName);
         return replyMapper.insertReply(reply);
     }
 
     /**
      * 删除评论
-     * @param userId 评论用户的id
+     * @param userName 评论用户的id
      * @param messageId 留言的id
      * @return 返回结果 0/1
      */
-    public int deleteReply(String userId,Integer messageId) {
-        return replyMapper.deleteReply(userId, messageId);
+    public int deleteReply(String userName, Integer messageId, String createTime) {
+        return replyMapper.deleteReply(userName, messageId, createTime);
     }
 }

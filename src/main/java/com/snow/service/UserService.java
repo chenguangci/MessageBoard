@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class UserService {
-    private final UserMapper userMapper;
+    private final UserMapper userMapper ;
 
     @Autowired
     public UserService(UserMapper userMapper) {
@@ -22,13 +22,13 @@ public class UserService {
     public List<User> selectUser(User user,int limit,int num){
         return userMapper.selectUser(user,limit,num);
     }
-    public int updateUser(String oldId, User user){
-        return userMapper.updateUser(oldId,user);
+    public int updateUser(String oldName, User user){
+        return userMapper.updateUser(oldName,user);
     }
     public int insertUser(User user){
         return userMapper.insertUser(user);
     }
-    public int deleteUser(String id){
-        return userMapper.deleteUser(id);
+    public int deleteUser(String name){
+        return userMapper.deleteUser(name);
     }
 }

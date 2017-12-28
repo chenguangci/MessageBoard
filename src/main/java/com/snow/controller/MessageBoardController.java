@@ -13,7 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping
 public class MessageBoardController {
     private final MessageBoardService messageBoardService;
+    //每页显示条数
+    private static final int number = 10;
     private static Integer total;
+
     @Autowired
     public MessageBoardController(MessageBoardService messageBoardService) {
         this.messageBoardService = messageBoardService;
@@ -33,7 +36,6 @@ public class MessageBoardController {
         if (page == null) {
             page = 1;
         }
-        int number = 10;
         int limit = number*(page-1);
         modelAndView.addObject("messageBoard",messageBoardService.selectMessageBoard(1,limit,number));
         modelAndView.setViewName("index");
@@ -43,14 +45,14 @@ public class MessageBoardController {
     /**
      * 添加留言
      * @param context 留言内容
-     * @param userId 用户id
+     * @param userName 用户id
      * @return 添加结果
      */
     @RequestMapping("/index/insertMessageBoard")
     @ResponseBody
-    public ModelMap insertMessageBoard(@RequestParam(value = "context")String context,@RequestParam("userId")String userId) {
+    public ModelMap insertMessageBoard(@RequestParam(value = "context")String context,@RequestParam("userName")String userName) {
         ModelMap modelMap = new ModelMap();
-        if (messageBoardService.insertMessageBoard(context, userId) == 1) {
+        if (messageBoardService.insertMessageBoard(context, userName) == 1) {
             modelMap.put("msg","发布成功，等待管理员审核");
         } else {
             modelMap.put("msg","发布失败");

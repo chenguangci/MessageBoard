@@ -6,23 +6,23 @@
         <id property="messageBoardId" column="message_id"/>
         <result property="context" column="message_context"/>
         <result property="createDate" column="create_time"/>
-        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
         <result property="state" column="state"/>
         <collection property="replies" columnPrefix="reply_" resultMap="com.snow.mapper.ReplyMapper.reply"/>
     </resultMap>
-    <select id="messageNumber">
+    <select id="messageNumber" resultType="java.lang.Integer">
         SELECT count(message_id) FROM message WHERE state = #{state}
     </select>
     <select id="selectMessageBoard" resultMap="messageBoard">
-        SELECT a.message_id,a.create_time,a.message_context,a.user_id,a.state,
-                b.reply_context reply_reply_context, b.create_time reply_create_time,b.user_id reply_user_id
+        SELECT a.message_id,a.create_time,a.message_context,a.user_name,a.state,
+                b.reply_context reply_reply_context, b.create_time reply_create_time,b.user_name reply_user_id
         FROM message a
         LEFT JOIN reply b ON a.message_id = b.message_id
         WHERE a.state = #{state}
         ORDER BY a.create_time LIMIT #{limit},#{number}
     </select>
     <insert id="insertMessageBoard">
-        INSERT IGNORE INTO message VALUES (0,#{createDate},#{context},#{userId},0)
+        INSERT IGNORE INTO message VALUES (0,#{createDate},#{context},#{userName},0)
     </insert>
     <delete id="deleteMessageBoard">
         DELETE FROM message WHERE message_id = #{id}
