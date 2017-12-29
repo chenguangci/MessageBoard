@@ -15,7 +15,7 @@
     </select>
     <select id="selectMessageBoard" resultMap="messageBoard">
         SELECT a.message_id,a.create_time,a.message_context,a.user_name,a.state,
-                b.reply_context reply_reply_context, b.create_time reply_create_time,b.user_name reply_user_id
+                b.reply_context reply_reply_context, b.create_time reply_create_time,b.user_name reply_user_name
         FROM message a
         LEFT JOIN reply b ON a.message_id = b.message_id
         WHERE a.state = #{state}

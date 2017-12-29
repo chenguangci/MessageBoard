@@ -1,8 +1,10 @@
 package com.snow.controller;
+/**
+ * 处理评论模块
+ */
 
 import com.snow.service.ReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;

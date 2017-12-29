@@ -27,7 +27,7 @@
                 and user_password = #{user.password}
             </if>
         </where>
-        ORDER BY userName LIMIT #{limit},#{number}
+        ORDER BY user_name LIMIT #{limit},#{number}
     </select>
     <insert id="insertUser">
         INSERT IGNORE INTO the_user VALUE (#{userName},#{password},#{type})

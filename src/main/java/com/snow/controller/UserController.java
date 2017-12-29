@@ -1,13 +1,19 @@
 package com.snow.controller;
-
+/**
+ * 用户登陆，注册模块
+ */
 import com.snow.entity.User;
 import com.snow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -21,27 +27,46 @@ public class UserController {
         this.service = service;
     }
 
-    @RequestMapping(value = "/toRegister")
-    public String toRegister(){
-        return "register";
+    /**
+     * 开始页面
+     * @return
+     */
+    @RequestMapping
+    public ModelAndView login(){
+        ModelAndView model = new ModelAndView();
+        model.setViewName("begin");
+        return model;
     }
+
+    /**
+     * 跳转注册或者登陆页面
+     * @return
+     */
+    @RequestMapping(value = "/operation/{operation}")
+    public String toRegister(@PathVariable String operation) {
+        if ("register".equals(operation))
+            return "register";
+        else if ("login".equals(operation))
+            return "login";
+        else
+            return "error";
+    }
+
     /**
      * 注册
      * @param user 注册信息
      * @return 注册结果
      */
     @RequestMapping(value = "/register")
-    public ModelAndView register(User user) {
-        ModelAndView modelAndView = new ModelAndView();
+    @ResponseBody
+    public ModelMap register(User user) {
+        ModelMap modelMap = new ModelMap();
         if (service.insertUser(user)==1){
-            //TODO 返回登陆页面
-            modelAndView.setViewName("login");
+            modelMap.put("msg","注册成功");
         } else {
-            //TODO 提示失败
-            modelAndView.addObject("error","注册失败，可能是确实必要信息");
-            modelAndView.setViewName("register");
+            modelMap.put("msg","注册失败，可能是确实必要信息或者用户名重复");
         }
-        return modelAndView;
+        return modelMap;
     }
 
     /**
@@ -52,14 +77,15 @@ public class UserController {
      */
     @RequestMapping(value = "/login")
     public ModelAndView login(@RequestParam(value = "userName", required = false)String userName,
-                              @RequestParam(value = "password", required = false)String password) {
+                              @RequestParam(value = "password", required = false)String password,
+                              HttpSession session) {
         ModelAndView model = new ModelAndView();
         User user = new User();
         user.setUserName(userName);
         user.setPassword(password);
         List<User> users = service.selectUser(user,0,1);
         if (users.size()>0) {
-            model.addObject("userName",users.get(0).getUserName());
+            session.setAttribute("userName", users.get(0).getUserName());
             model.setViewName("redirect:/index");
         } else {
             model.addObject("msg","用户名或密码错误");
