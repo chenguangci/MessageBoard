@@ -48,13 +48,13 @@ public class MessageBoardController {
     /**
      * 添加留言
      * @param context 留言内容
-     * @param userName 用户id
      * @return 添加结果
      */
     @RequestMapping("/index/insertMessageBoard")
     @ResponseBody
-    public ModelMap insertMessageBoard(@RequestParam(value = "context")String context,@RequestParam("userName")String userName) {
+    public ModelMap insertMessageBoard(@RequestParam(value = "context")String context, HttpSession session) {
         ModelMap modelMap = new ModelMap();
+        String userName = (String) session.getAttribute("userName");
         if (messageBoardService.insertMessageBoard(context, userName) == 1) {
             modelMap.put("msg","发布成功，等待管理员审核");
         } else {

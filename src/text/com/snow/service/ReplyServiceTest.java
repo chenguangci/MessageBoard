@@ -15,7 +15,7 @@ public class ReplyServiceTest extends TestCase {
     private ReplyService service;
     @Test
     public void testInsertReply() throws Exception {
-        System.out.println(service.insertReply(1,"0002","陈会长说的对"));
+        System.out.println(service.insertReply(1,"0002","陈会长说的对", "2017-12-30 13:14:55"));
     }
     @Test
     public void testDeleteReply() throws Exception {

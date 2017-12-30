@@ -5,6 +5,7 @@
     <resultMap id="user" type="com.snow.entity.User">
         <id property="userName" column="user_name"/>
         <result property="password" column="user_password"/>
+        <result property="type" column="type"/>
     </resultMap>
     <select id="userNumber" resultType="java.lang.Integer">
         SELECT count(user_name) FROM the_user
@@ -18,7 +19,7 @@
         </where>
     </select>
     <select id="selectUser" resultMap="user">
-        SELECT user_name,user_password FROM the_user
+        SELECT user_name,user_password,type FROM the_user
         <where>
             <if test="user.userName!=null and !&quot;&quot;.equals(user.userName.trim())">
                 and user_name = #{user.userName}

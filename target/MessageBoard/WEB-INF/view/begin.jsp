@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <title>Message board</title>
+    <title>留言板</title>
     <link rel="stylesheet" href="${path}/static/css/style.css">
 </head>
 <body class="no-js">

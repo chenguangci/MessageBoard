@@ -25,11 +25,8 @@ public class ReplyService {
      * @param context 评论内容
      * @return 结果 0/1
      */
-    public int insertReply(Integer id, String userName, String context) {
+    public int insertReply(Integer id, String userName, String context, String time) {
         Reply reply = new Reply();
-        Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String time = format.format(date);
         reply.setCreateDate(time);
         reply.setContext(context);
         reply.setMessageId(id);

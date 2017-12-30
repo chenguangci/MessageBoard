@@ -32,8 +32,9 @@ public class UserController {
      * @return
      */
     @RequestMapping
-    public ModelAndView login(){
+    public ModelAndView login(HttpSession session){
         ModelAndView model = new ModelAndView();
+        session.removeAttribute("userName");
         model.setViewName("begin");
         return model;
     }
@@ -43,12 +44,18 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/operation/{operation}")
-    public String toRegister(@PathVariable String operation) {
-        if ("register".equals(operation))
+    public String toRegister(@PathVariable String operation, HttpSession session) {
+        if ("register".equals(operation)) {
             return "register";
-        else if ("login".equals(operation))
+        } else if ("login".equals(operation)) {
+            session.removeAttribute("userName");
+            session.removeAttribute("userType");
             return "login";
-        else
+        } else if ("load".equals(operation)) {
+            session.setAttribute("userName","游客");
+            session.setAttribute("userType",-1);
+            return "redirect:/index";
+        } else
             return "error";
     }
 
@@ -64,7 +71,7 @@ public class UserController {
         if (service.insertUser(user)==1){
             modelMap.put("msg","注册成功");
         } else {
-            modelMap.put("msg","注册失败，可能是确实必要信息或者用户名重复");
+            modelMap.put("msg","注册失败，可能是确少必要信息或者用户名重复");
         }
         return modelMap;
     }
@@ -86,7 +93,11 @@ public class UserController {
         List<User> users = service.selectUser(user,0,1);
         if (users.size()>0) {
             session.setAttribute("userName", users.get(0).getUserName());
-            model.setViewName("redirect:/index");
+            session.setAttribute("userType",users.get(0).getType());
+            if (users.get(0).getType()==1)
+                model.setViewName("redirect:/examine");
+            else
+                model.setViewName("redirect:/index");
         } else {
             model.addObject("msg","用户名或密码错误");
             model.setViewName("login");

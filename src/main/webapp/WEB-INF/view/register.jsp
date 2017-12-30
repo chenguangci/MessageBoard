@@ -34,9 +34,9 @@
         }
     </script>
 </head>
-<body>
+<body background="${path}/static/image/background.png">
 <br><br>
-<div style="width: 30%;margin: auto;padding: 50px; background-color: #A8A8A8">
+<div style="width: 30%;margin: auto;padding: 50px; background-color: rgba(240,240,240,0.5)">
 <form class="layui-form" action="">
     <div class="layui-form-item">
         <label class="layui-form-label">用户名</label>

@@ -14,4 +14,15 @@
           p:viewClass="org.springframework.web.servlet.view.JstlView"
           p:prefix="/WEB-INF/view/"
           p:suffix=".jsp"/>
+    <!--注册拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/*"/>
+            <mvc:exclude-mapping path="/static/*"/>
+            <mvc:exclude-mapping path="/user"/>
+            <mvc:exclude-mapping path="/user/operation/*"/>
+            <bean class="com.snow.controller.AllInterceptor"/>
+        </mvc:interceptor>
+
+    </mvc:interceptors>
 </beans>

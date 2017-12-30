@@ -16,17 +16,17 @@
     <link href="${path}/static/css/style2.css" rel="stylesheet" />
     <script src="${path}/static/js/jquery-3.2.1.min.js"></script>
     <script>
-        function examine(isPass, messageid) {
+        function examine(isPass, id) {
             $.ajax({
                 url:'${path}/result',
                 data: {
                     state:isPass,
-                    messageId:messageid
+                    messageId:id
                 },
                 dataType:'json',
                 type:'POST',
                 success:function (data) {
-                    $("#message"+messageid).remove();
+                    $("#message"+id).remove();
                     alert(data.msg);
                     if (document.getElementsByName("msg").length<=0){
                         $("#panel").append("<div class=\"blog-post\"><p>没有待审核的留言</p></div>")
@@ -65,8 +65,8 @@
                     <p>
                         ${message.context}
                     </p>
-                    <input type="button" id="tongguo" value="通过" onclick="examine(1,${message.messageBoardId})"/>&nbsp;&nbsp;
-                    <input type="button" id="butongguo" value="不通过" onclick="examine(-1,${message.messageBoardId})"/>
+                    <input type="button" value="通过" onclick="examine(1,${message.messageBoardId})"/>&nbsp;&nbsp;
+                    <input type="button" value="不通过" onclick="examine(-1,${message.messageBoardId})"/>
                 </div>
                 <br/>
             </c:forEach>
